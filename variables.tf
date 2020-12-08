@@ -11,6 +11,16 @@ variable "retention_period" {
   default = 24
 }
 
+variable "encryption_type" {
+  type = string
+  default = "KMS"
+}
+
+variable "kms_key_id" {
+  type = string
+  default = "alias/aws/kinesis"
+}
+
 variable "environment" {
   type = string
 }
