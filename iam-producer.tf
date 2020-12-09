@@ -28,11 +28,12 @@ resource "aws_iam_policy" "producer_policy" {
 data "aws_iam_policy_document" "produce_kinesis_document" {
   statement {
     actions = [
-      "kinesis:PutRecord"
+      "kinesis:PutRecord",
+      "kinesis:PutRecords"
     ]
 
     resources = [
-      "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:stream/${var.stream_name}"
+      "arn:aws:kinesis:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:stream/${var.stream_name}"
     ]
   }
 }
