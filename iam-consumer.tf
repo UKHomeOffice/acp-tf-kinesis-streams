@@ -29,7 +29,8 @@ data "aws_iam_policy_document" "consume_kinesis_document" {
   statement {
     actions = [
       "kinesis:Get*",
-      "kinesis:DescribeStreamSummary"
+      "kinesis:DescribeStream*",
+      "kinesis:ListShards"
     ]
 
     resources = [
@@ -43,7 +44,23 @@ data "aws_iam_policy_document" "consume_kinesis_document" {
     ]
 
     resources = [
-      "*"
+      "arn:aws:kinesis:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:stream/*"
+    ]
+  }
+
+  statement {
+    actions = [
+      "dynamodb:CreateTable",
+      "dynamodb:DescribeTable",
+      "dynamodb:Scan",
+      "dynamodb:PutItem",
+      "dynamodb:GetItem",
+      "dynamodb:UpdateItem",
+      "dynamodb:DeleteItem"
+    ]
+
+    resources = [
+      "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/${var.consumer_name}*"
     ]
   }
 }

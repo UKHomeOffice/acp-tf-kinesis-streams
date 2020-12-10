@@ -29,7 +29,10 @@ data "aws_iam_policy_document" "produce_kinesis_document" {
   statement {
     actions = [
       "kinesis:PutRecord",
-      "kinesis:PutRecords"
+      "kinesis:PutRecords",
+      "kinesis:DescribeStream*",
+      "kinesis:SubscribeToShard",
+      "kinesis:RegisterStreamConsumer"
     ]
 
     resources = [
