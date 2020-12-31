@@ -7,7 +7,12 @@ resource "aws_kinesis_stream" "stream" {
 
   shard_level_metrics = [
     "IncomingBytes",
-    "OutgoingBytes",
+    "OutgoingRecords",
+    "IteratorAgeMilliseconds",
+    "IncomingRecords",
+    "ReadProvisionedThroughputExceeded",
+    "WriteProvisionedThroughputExceeded",
+    "OutgoingBytes"
   ]
 
   tags = {
