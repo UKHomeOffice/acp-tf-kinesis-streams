@@ -2,9 +2,6 @@ resource "aws_iam_user" "kinesis_consumer" {
   name = "acp-kinesis-consumer-${var.environment}"
   path = "/"
 
-  tags = {
-    tag-key = "tag-value"
-  }
 }
 
 resource "aws_iam_access_key" "consumer" {

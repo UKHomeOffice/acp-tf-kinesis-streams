@@ -13,3 +13,11 @@ output "producer_access_key" {
 output "producer_secret_key" {
   value = aws_iam_access_key.producer.encrypted_secret
 }
+
+output "cloudwatch_exporter_access_key" {
+  value = aws_iam_access_key.cloudwatch_exporter.id
+}
+
+output "cloudwatch_exporter_secret_key" {
+  value = aws_iam_access_key.cloudwatch_exporter.encrypted_secret
+}
