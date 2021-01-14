@@ -25,11 +25,11 @@ resource "aws_kms_key" "stream_key" {
   deletion_window_in_days = 10
   customer_master_key_spec = "SYMMETRIC_DEFAULT"
   enable_key_rotation = true
-  
-  #policy = data.aws_iam_policy_document.stream_key_policy_document.json
 
   tags = {
     Environment = var.environment
+    Stream = var.stream_name
+    CreationMechanism = "Terraform"
   }
 }
 
@@ -37,21 +37,3 @@ resource "aws_kms_alias" "stream_key_alias" {
   name          = "alias/${var.stream_name}"
   target_key_id = aws_kms_key.stream_key.key_id
 }
-
-# data "aws_iam_policy_document" "stream_key_policy_document" {
-
-#   statement {
-#     actions = [
-#       "kms:*"
-#     ]
-
-#     principals {
-#       type        = "AWS"
-#       identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"]
-#     }
-
-#     resources = [
-#       "arn:aws:kms:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key/${aws_kms_key.stream_key.key_id}"
-#     ]
-#   }
-# }

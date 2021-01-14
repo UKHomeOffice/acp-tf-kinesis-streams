@@ -2,6 +2,12 @@ resource "aws_iam_user" "kinesis_consumer" {
   name = "acp-kinesis-consumer-${var.environment}"
   path = "/"
 
+  tags = {
+    Environment = var.environment
+    Stream = var.stream_name
+    CreationMechanism = "Terraform"
+  }
+
 }
 
 resource "aws_iam_access_key" "consumer" {

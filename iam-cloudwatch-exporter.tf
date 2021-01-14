@@ -2,6 +2,12 @@ resource "aws_iam_user" "cloudwatch_exporter" {
   name = "acp-kinesis-cloudwatch-exporter-${var.environment}"
   path = "/"
 
+  tags = {
+    Environment = var.environment
+    Stream = var.stream_name
+    CreationMechanism = "Terraform"
+  }
+
 }
 
 resource "aws_iam_access_key" "cloudwatch_exporter" {

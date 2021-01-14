@@ -2,6 +2,12 @@ resource "aws_iam_user" "kinesis_producer" {
   name = "acp-kinesis-producer-${var.environment}"
   path = "/"
 
+  tags = {
+    Environment = var.environment
+    Stream = var.stream_name
+    CreationMechanism = "Terraform"
+  }
+
 }
 
 resource "aws_iam_access_key" "producer" {
@@ -23,7 +29,7 @@ resource "aws_iam_policy" "producer_policy" {
 }
 
 data "aws_iam_policy_document" "producer_kinesis_document" {
-  
+
   statement {
     actions = [
       "kms:GenerateDataKey"
