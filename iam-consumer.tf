@@ -23,6 +23,17 @@ resource "aws_iam_policy" "consumer_policy" {
 }
 
 data "aws_iam_policy_document" "consume_kinesis_document" {
+
+  statement {
+    actions = [
+      "kms:Decrypt"
+    ]
+
+    resources = [
+      "arn:aws:kms:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key/${aws_kms_key.stream_key.key_id}"
+    ]
+  }
+
   statement {
     actions = [
       "kinesis:Get*",

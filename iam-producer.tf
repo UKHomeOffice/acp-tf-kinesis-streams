@@ -19,10 +19,21 @@ resource "aws_iam_policy" "producer_policy" {
   path        = "/"
   description = "A policy to enable writing to the specified Kinesis Data Stream"
 
-  policy = data.aws_iam_policy_document.produce_kinesis_document.json
+  policy = data.aws_iam_policy_document.producer_kinesis_document.json
 }
 
-data "aws_iam_policy_document" "produce_kinesis_document" {
+data "aws_iam_policy_document" "producer_kinesis_document" {
+  
+  statement {
+    actions = [
+      "kms:GenerateDataKey"
+    ]
+
+    resources = [
+      "arn:aws:kms:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key/${aws_kms_key.stream_key.key_id}"
+    ]
+  }
+
   statement {
     actions = [
       "kinesis:PutRecord",

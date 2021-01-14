@@ -16,11 +16,6 @@ variable "encryption_type" {
   default = "KMS"
 }
 
-variable "kms_key_id" {
-  type = string
-  default = "alias/aws/kinesis"
-}
-
 variable "environment" {
   type = string
 }
