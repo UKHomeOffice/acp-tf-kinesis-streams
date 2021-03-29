@@ -21,14 +21,14 @@ resource "aws_kinesis_stream" "stream" {
 }
 
 resource "aws_kms_key" "stream_key" {
-  description             = "Encrypts data within Kinesis stream, ${var.stream_name}"
-  deletion_window_in_days = 10
+  description              = "Encrypts data within Kinesis stream, ${var.stream_name}"
+  deletion_window_in_days  = 10
   customer_master_key_spec = "SYMMETRIC_DEFAULT"
-  enable_key_rotation = true
+  enable_key_rotation      = true
 
   tags = {
-    Environment = var.environment
-    Stream = var.stream_name
+    Environment       = var.environment
+    Stream            = var.stream_name
     CreationMechanism = "Terraform"
   }
 }

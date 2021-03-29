@@ -1,27 +1,31 @@
 resource "aws_iam_user" "kinesis_consumer" {
-  name = "acp-kinesis-consumer-${var.environment}"
-  path = "/"
+  count = var.consumer_user ? 1 : 0
+  name  = "${var.stream_name}-consumer-${var.environment}"
+  path  = "/"
 
   tags = {
-    Environment = var.environment
-    Stream = var.stream_name
+    Environment       = var.environment
+    Stream            = var.stream_name
     CreationMechanism = "Terraform"
   }
 
 }
 
 resource "aws_iam_access_key" "consumer" {
-  user = aws_iam_user.kinesis_consumer.name
+  count   = var.consumer_user ? 1 : 0
+  user    = aws_iam_user.kinesis_consumer[0].name
   pgp_key = data.aws_ssm_parameter.kinesis_users_public_key.value
 }
 
 resource "aws_iam_user_policy_attachment" "consumer_policy" {
-  user       = aws_iam_user.kinesis_consumer.name
-  policy_arn = aws_iam_policy.consumer_policy.arn
+  count      = var.consumer_user ? 1 : 0
+  user       = aws_iam_user.kinesis_consumer[0].name
+  policy_arn = aws_iam_policy.consumer_policy[0].arn
 }
 
 resource "aws_iam_policy" "consumer_policy" {
-  name        = "acp_kinesis_consumer_polcy"
+  count       = var.consumer_user ? 1 : 0
+  name        = "${var.stream_name}_consumer_polcy"
   path        = "/"
   description = "A policy to enable consuming from the specified Kinesis Data Stream"
 
@@ -78,3 +82,4 @@ data "aws_iam_policy_document" "consume_kinesis_document" {
     ]
   }
 }
+
