@@ -1,27 +1,31 @@
 resource "aws_iam_user" "cloudwatch_exporter" {
-  name = "acp-kinesis-cloudwatch-exporter-${var.environment}"
-  path = "/"
+  count = var.exporter_user ? 1 : 0
+  name  = "${var.stream_name}-cloudwatch-exporter-${var.environment}"
+  path  = "/"
 
   tags = {
-    Environment = var.environment
-    Stream = var.stream_name
+    Environment       = var.environment
+    Stream            = var.stream_name
     CreationMechanism = "Terraform"
   }
 
 }
 
 resource "aws_iam_access_key" "cloudwatch_exporter" {
-  user = aws_iam_user.cloudwatch_exporter.name
+  count   = var.exporter_user ? 1 : 0
+  user    = aws_iam_user.cloudwatch_exporter[0].name
   pgp_key = data.aws_ssm_parameter.kinesis_users_public_key.value
 }
 
 resource "aws_iam_user_policy_attachment" "cloudwatch_exporter_policy" {
-  user       = aws_iam_user.cloudwatch_exporter.name
-  policy_arn = aws_iam_policy.cloudwatch_exporter_policy.arn
+  count      = var.exporter_user ? 1 : 0
+  user       = aws_iam_user.cloudwatch_exporter[0].name
+  policy_arn = aws_iam_policy.cloudwatch_exporter_policy[0].arn
 }
 
 resource "aws_iam_policy" "cloudwatch_exporter_policy" {
-  name        = "acp_kinesis_cloudwatch_exporter_polcy"
+  count       = var.exporter_user ? 1 : 0
+  name        = "${var.stream_name}_cloudwatch_exporter_policy"
   path        = "/"
   description = "A policy to enable gathering metrics about the specified Kinesis Data Stream"
 
