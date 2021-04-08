@@ -1,13 +1,9 @@
 resource "aws_iam_user" "kinesis_producer" {
   count = var.producer_user ? 1 : 0
-  name  = "${var.stream_name}-producer-${var.environment}"
+  name  = "${var.stream_name}-producer"
   path  = "/"
 
-  tags = {
-    Environment       = var.environment
-    Stream            = var.stream_name
-    CreationMechanism = "Terraform"
-  }
+  tags = var.tags
 
 }
 

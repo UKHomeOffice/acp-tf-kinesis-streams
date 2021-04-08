@@ -1,13 +1,9 @@
 resource "aws_iam_user" "cloudwatch_exporter" {
   count = var.exporter_user ? 1 : 0
-  name  = "${var.stream_name}-cloudwatch-exporter-${var.environment}"
+  name  = "${var.stream_name}-cloudwatch-exporter"
   path  = "/"
 
-  tags = {
-    Environment       = var.environment
-    Stream            = var.stream_name
-    CreationMechanism = "Terraform"
-  }
+  tags = var.tags
 
 }
 

@@ -16,10 +16,6 @@ variable "encryption_type" {
   default = "KMS"
 }
 
-variable "environment" {
-  type = string
-}
-
 variable "kinesis_users_public_key_parameter_name" {
   type        = string
   description = "The name of the SSM parameter containing the public key for encrypting the AWS secret access key"
@@ -50,4 +46,8 @@ variable "exporter_user" {
   description = "If set to true create a Cloudwatch exporter user"
   default     = false
 
+}
+
+variable "tags" {
+  type = map(string)
 }
