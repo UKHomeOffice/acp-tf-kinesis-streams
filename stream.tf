@@ -15,9 +15,7 @@ resource "aws_kinesis_stream" "stream" {
     "OutgoingBytes"
   ]
 
-  tags = {
-    Environment = var.environment
-  }
+  tags = var.tags
 }
 
 resource "aws_kms_key" "stream_key" {
@@ -26,11 +24,7 @@ resource "aws_kms_key" "stream_key" {
   customer_master_key_spec = "SYMMETRIC_DEFAULT"
   enable_key_rotation      = true
 
-  tags = {
-    Environment       = var.environment
-    Stream            = var.stream_name
-    CreationMechanism = "Terraform"
-  }
+  tags = var.tags
 }
 
 resource "aws_kms_alias" "stream_key_alias" {

@@ -3,11 +3,7 @@ resource "aws_iam_user" "kinesis_consumer" {
   name  = "${var.stream_name}-consumer-${var.environment}"
   path  = "/"
 
-  tags = {
-    Environment       = var.environment
-    Stream            = var.stream_name
-    CreationMechanism = "Terraform"
-  }
+  tags = var.tags
 
 }
 
