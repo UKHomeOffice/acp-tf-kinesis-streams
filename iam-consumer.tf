@@ -1,6 +1,6 @@
 resource "aws_iam_user" "kinesis_consumer" {
   count = var.consumer_user ? 1 : 0
-  name  = "${var.stream_name}-consumer-${var.environment}"
+  name  = "${var.stream_name}-consumer"
   path  = "/"
 
   tags = var.tags
