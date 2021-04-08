@@ -25,3 +25,7 @@ output "cloudwatch_exporter_secret_key" {
 output "stream_arn" {
   value = aws_kinesis_stream.stream.arn
 }
+
+output "stream_key" {
+ value =  aws_kms_key.stream_key.arn
+}
