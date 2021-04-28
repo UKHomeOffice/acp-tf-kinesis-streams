@@ -74,7 +74,7 @@ data "aws_iam_policy_document" "consume_kinesis_document" {
     ]
 
     resources = [
-      "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/${var.consumer_name}*"
+      "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/${var.stream_name}*"
     ]
   }
 }

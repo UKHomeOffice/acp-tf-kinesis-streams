@@ -22,12 +22,6 @@ variable "kinesis_users_public_key_parameter_name" {
   default     = "kinesis-user-gpg-public-key"
 }
 
-variable "consumer_name" {
-  type        = string
-  default     = "logstash"
-  description = "The name of the consumer application, which will be the name given to the requisite DynamoDB table"
-}
-
 variable "consumer_user" {
   type        = bool
   description = "If set to true create a Kinesis Stream consumer user"
