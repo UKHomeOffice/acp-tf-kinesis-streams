@@ -32,6 +32,16 @@ data "aws_iam_policy_document" "consume_kinesis_document" {
 
   statement {
     actions = [
+      "cloudwatch:PutMetricData"
+    ]
+
+    resources = [
+      "arn:aws:cloudwatch:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"
+    ]
+  }
+
+  statement {
+    actions = [
       "kms:Decrypt"
     ]
 
@@ -78,4 +88,3 @@ data "aws_iam_policy_document" "consume_kinesis_document" {
     ]
   }
 }
-
